@@ -5,4 +5,14 @@
 
     <!-- 增加beanTest的配置 -->
     <bean id="myTestBean" class="test.bean.MyTestBean"/>
+
+
+    <!-- 将killDragonQuest注入到BraveKnight中 -->
+    <bean id="knight" class="test.knights.BraveKnight">
+        <constructor-arg ref="quest" />
+    </bean>
+
+    <bean id="quest" class="test.knights.KillDragonQuest">
+        <constructor-arg value="#{T(System).out}"/>
+    </bean>
 </beans>
