@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 增加beanTest的配置 -->
     <bean id="myTestBean" class="test.bean.MyTestBean"/>
@@ -15,4 +15,15 @@
     <bean id="quest" class="test.knights.KillDragonQuest">
         <constructor-arg value="#{T(System).out}"/>
     </bean>
+    <bean id="minstrel" class="test.minstrels.Minstrel">
+        <constructor-arg value="#{T(System).out}"/>
+    </bean>
+
+    <aop:config>
+        <aop:aspect ref="minstrel">
+            <aop:pointcut id="embark" expression="execution(* *.embarkOnQuest(..))" /> <!-- 定义切入点 -->
+            <aop:before pointcut-ref="embark" method="singBeforeQuest" />
+            <aop:after pointcut-ref="embark" method="singAfterQuest" />
+        </aop:aspect>
+    </aop:config>
 </beans>
