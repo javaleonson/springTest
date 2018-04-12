@@ -12,6 +12,8 @@ import test.proxy.StaticProxy;
 import java.lang.reflect.Proxy;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainTest {
     public Object getSqlObjectById(long id) {
@@ -37,8 +39,14 @@ public class MainTest {
         staticProxy_1.rentP();
 
         // dynamic proxy
+        System.out.println("______动态代理______");
         DynamicProxyHandler proxyHandler = context.getBean(DynamicProxyHandler.class);
         Rents rents = (Rents) Proxy.newProxyInstance(Rents.class.getClassLoader(), new Class[]{Rents.class}, proxyHandler);
         rents.rent();
+
+        proxyHandler.setTarget(new ArrayList<>());
+        List<String> list = (List) proxyHandler.getProxy();
+        list.add("hello");
+        System.out.println(list);
     }
 }

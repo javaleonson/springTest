@@ -20,14 +20,15 @@
         <constructor-arg value="#{T(System).out}"/>
     </bean>
 
-    <aop:config>
-        <aop:aspect ref="minstrel">
-            <aop:pointcut id="embark" expression="execution(* *.embarkOnQuest(..))" /> <!-- 定义切入点 -->
-            <aop:before pointcut-ref="embark" method="singBeforeQuest" />
-            <aop:after pointcut-ref="embark" method="singAfterQuest" />
-        </aop:aspect>
-    </aop:config>
-
+    <!--<aop:config>-->
+        <!--<aop:aspect ref="minstrel">-->
+            <!--<aop:pointcut id="embark" expression="execution(* *.embarkOnQuest(..))" /> &lt;!&ndash; 定义切入点 &ndash;&gt;-->
+            <!--<aop:before pointcut-ref="embark" method="singBeforeQuest" />-->
+            <!--<aop:after pointcut-ref="embark" method="singAfterQuest" />-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
+    <bean id="minstrelsyMachine" class="test.minstrels.MinstrelsyMachine" />
+    <aop:aspectj-autoproxy/>
 
     <bean id="host" class="test.proxy.Host" >
         <property name="houseAddr" value="h1"/>
@@ -37,7 +38,7 @@
     </bean>
 
     <bean class="test.proxy.DynamicProxyHandler" id="dynamicProxyHandler">
-        <property name="rent" ref="host"/>
+        <property name="target" ref="host"/>
     </bean>
 
 </beans>
