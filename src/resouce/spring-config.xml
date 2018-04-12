@@ -5,16 +5,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- 增加beanTest的配置 -->
-    <bean id="myTestBean" class="test.bean.MyTestBean"/>
+    <bean id="myTestBean" class="test.bean.MyTestBean" autowire="default"/>
 
 
     <!-- 将killDragonQuest注入到BraveKnight中 -->
     <bean id="knight" class="test.knights.BraveKnight">
-        <constructor-arg ref="quest" />
+        <constructor-arg  ref="quest" />
     </bean>
 
     <bean id="quest" class="test.knights.KillDragonQuest">
-        <constructor-arg value="#{T(System).out}"/>
+        <constructor-arg index="0" value="#{T(System).out}"/>
     </bean>
     <bean id="minstrel" class="test.minstrels.Minstrel">
         <constructor-arg value="#{T(System).out}"/>
@@ -27,5 +27,17 @@
             <aop:after pointcut-ref="embark" method="singAfterQuest" />
         </aop:aspect>
     </aop:config>
+
+
+    <bean id="host" class="test.proxy.Host" >
+        <property name="houseAddr" value="h1"/>
+    </bean>
+    <bean id="staticProxy" class="test.proxy.StaticProxy">
+        <property name="rents" ref="host"/>
+    </bean>
+
+    <bean class="test.proxy.DynamicProxyHandler" id="dynamicProxyHandler">
+        <property name="rent" ref="host"/>
+    </bean>
 
 </beans>

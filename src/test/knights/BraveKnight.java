@@ -1,7 +1,8 @@
 package test.knights;
 
 /**
- * 能灵活处理所有探险任务的勇敢骑士
+ * 能灵活处理所有探险任务的勇敢骑士<br>
+ *     这里是一种静态代理模式，quest被骑士代理执行，quest是接口
  */
 public class BraveKnight implements Knight {
     private Quest quest;
